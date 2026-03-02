@@ -54,6 +54,26 @@ sudo apt install python3-pip -y
   pip install numpy
   ```
 
+ ### Libraries van de OLED:
+
+  - luma:
+  Dit library gebruiken we om onze OLED te kunnen gebruiken.
+
+  **stap 1)** Download luma.core
+  
+  ```
+  pip install luma.core
+  ```
+  luma.core laat ons communiceren met de oled via i2C.
+
+  **stap 2)** Download luma.oled
+
+  ```
+  pip install luma.oled
+  ```
+  luma.oled laat ons praten met de controlchip die in de OLED zit
+ 
+
    
     
     
