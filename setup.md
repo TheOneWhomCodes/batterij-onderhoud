@@ -21,6 +21,7 @@ sudo apt install python3-pip -y
 
  ### Libraries van de camera:
    - pupil-apriltags:
+  
   Dit library is nodig om apriltags effectief te kunnen scannen.
   
   **stap 1)** Download cmake:
@@ -34,9 +35,10 @@ sudo apt install python3-pip -y
   ```
 
   - cv2:
+    
     Dit library is nodig om onze camera in werking te laten brengen.
 
-    Download cv2:
+    **stap 1)** Download cv2:
 
     ```
     sudo apt install python3-opencv -y
