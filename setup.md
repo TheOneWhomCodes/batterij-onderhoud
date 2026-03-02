@@ -36,14 +36,24 @@ sudo apt install python3-pip -y
 
   - cv2:
     
-    Dit library is nodig om onze camera in werking te laten brengen.
+  Dit library is nodig om onze camera in werking te laten brengen.
 
     **stap 1)** Download cv2:
 
     ```
     sudo apt install python3-opencv -y
     ```
+  - Numpy:
+  
+  Dit library is nodig voor de cv2 zodat hij met die camera data kan werken en kan vertalen.
 
+    **stap 1)** Download Numpy:
+
+    ```
+    pip install numpy
+    ```
+
+   
     
     
 
