@@ -6,4 +6,23 @@
 - OLED Display
 - Rotary Encoder KY-40
 
+### libraries:
+- **OLED**:
+  - luma
+  - PIL
+- **Camera**:
+  - numpy
+  - cv2
+  - pupil_apriltags
+
+
+
+
+
+  
+
+    
+
+
+  
 
