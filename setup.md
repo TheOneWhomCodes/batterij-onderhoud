@@ -21,7 +21,7 @@ sudo apt install python3-pip -y
 
  ### Libraries van de camera:
    - pupil-apriltags:
-  Dit library is nodig om apriltags effectief te kunnen scannen.
+  Deze library is nodig om apriltags effectief te kunnen scannen.
   
   **stap 1)** Download cmake:
 
@@ -36,7 +36,7 @@ sudo apt install python3-pip -y
   ```
 
   - cv2:
-  Dit library is nodig om onze camera in werking te laten brengen.
+  Deze library is nodig om onze camera in werking te laten brengen.
 
   **stap 1)** Download cv2:
 
@@ -46,7 +46,7 @@ sudo apt install python3-pip -y
     
   - Numpy:
   
-  Dit library is nodig voor de cv2 zodat hij met die camera data kan werken en kan vertalen.
+  Deze library is nodig voor de cv2 zodat hij met die camera data kan werken en kan vertalen.
 
   **stap 1)** Download Numpy:
 
@@ -57,7 +57,8 @@ sudo apt install python3-pip -y
  ### Libraries van de OLED:
 
   - luma:
-  Dit library gebruiken we om onze OLED te kunnen gebruiken.
+
+  Deze library gebruiken we om onze OLED te kunnen gebruiken.
 
   **stap 1)** Download luma.core
   
