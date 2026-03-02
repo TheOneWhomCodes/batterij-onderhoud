@@ -73,6 +73,15 @@ sudo apt install python3-pip -y
   pip install luma.oled
   ```
   luma.oled laat ons praten met de controlchip die in de OLED zit
+
+  - Pillow:
+  Deze library hebben we nodig om te kunnen tekenen/schrijven op de OLED.
+
+  **stap 1)** Download Pillow
+
+  ```
+  pip install Pillow
+  ```
  
 
    
