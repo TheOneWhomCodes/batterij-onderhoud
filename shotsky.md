@@ -9,7 +9,7 @@ We hebben onze waardes gemeten van wanneer we een shotsky gebruiken, en zonder.
 <img width="249" height="545" alt="image" src="https://github.com/user-attachments/assets/87a6d4c5-c451-47f2-8d2e-1ecd08dab84e" />
 
 
-We hebben ook de verschillen gemeten van met en zonder.
+We hebben ook de verschillen gemeten van met en zonder, en je kan zien dat de verschillen zeer klein zijn.
 
 
 We hebben deze waardes in een excel gezet, en een trendlijn door getrokken, en we zagen
