@@ -82,6 +82,13 @@ sudo apt install python3-pip -y
   ```
   pip install Pillow
   ```
+### Libraries van de ADS1115:
+  - Adafruit:
+  Deze library hebben we nodig om onze adc te besturen.
+
+  ```
+  pip install adafruit-circuitpython-ads1x15
+  ```
  
 
    
