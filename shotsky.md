@@ -21,6 +21,10 @@ voor nog meer bewijs, hebben we ook de R² berekent die je kan zien.
 
 **formule:** y = 0,2342x - 0,0186
 
+De y-as is de ADC spanning.
+
+De x-as is de overeenkomende batterij spanning.
+
 ### OPGELET
 Als u een nieuwe meter wil bouwen, moet je wel terug testen voor de tolerantie van de weerstanden die je wil gebruiken.
 Hiermee verandert ook wel de gegeven formule.
