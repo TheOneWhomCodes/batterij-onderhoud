@@ -33,6 +33,28 @@ $$
 In dit voorbeeld zou dit dan een schatting zijn van onze batterij spanning
     
 
+## mogelijk probleem!
+
+Zoals u weet gebruiken we adafruit voor het controleren van onze ads1115 chip.
+
+Het kan zijn dat ik iets fout heb gedaan, waardoor er stroom nogsteeds door andere poorten kan gaan, tijdens het meten van voltage met mijn code.
+
+Wanneer we meten vanaf poort A0, terwijl we andere poorten hebben geconnecteerd. Kan er zijn dat er afwijkingen gebeuren.
+
+Onze kalibratie gaat van **6V** tot **14V**.
+
+Wat er voorvalt terwijl we A0 uitlezen met:
+
+- andere poorten geconnecteerd
+
+<img width="1315" height="580" alt="image" src="https://github.com/user-attachments/assets/39434cec-5326-4ba5-8660-9afc1faabc11" />
+
+- alleen A0 geconnecteerd
+
+<img width="1253" height="501" alt="image" src="https://github.com/user-attachments/assets/aff8388f-dcc6-4ee2-9383-7fc3d71034df" />
+
+
+
 
 
 
