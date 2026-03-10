@@ -43,6 +43,11 @@ sudo apt install python3-pip -y
   ```
   sudo apt install python3-opencv -y
   ```
+  **opgelet** Als de camera niet werkt, installeer dan dit, en verwijder het vorige.
+  ```
+  pip install opencv-contrib-python
+  ```
+  
     
   - Numpy:
   
