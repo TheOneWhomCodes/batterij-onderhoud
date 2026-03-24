@@ -14,6 +14,8 @@
   - numpy
   - cv2
   - pupil_apriltags
+- **ADS115**:
+  - Adafruit
 
 
 
