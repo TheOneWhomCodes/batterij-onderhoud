@@ -28,7 +28,7 @@ Hij zal eerst vragen om te kalibreren met 6V, en dan op 14V.
 
 Je moet de scroller gebruiken als drukknop, wanneer je de voedingsbron op 6 of 14V zet.
 
-Hier instructies voor de aansluiting: [voeding aansluiting]("aansluiting batterij.md")
+Hier instructies voor de aansluiting: [voeding aansluiting]("aansluiting-batterij.md")
 
 
 
