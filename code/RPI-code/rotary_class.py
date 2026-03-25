@@ -59,9 +59,25 @@ class Rotary:
 
         self.wait_event.wait() #We laten onze thread NIET verder gaan tot dit event is afgevuurd
 
-        self.ENCODER.close()
-        self.SWITCH.close()
-        self.OLED.disable_small_scroller()
+        self.close()
+        #we sluiten alles af
+        
+    def close(self):
+        try:
+            self.ENCODER.close()
+        except:
+            pass
+
+        try:
+            self.SWITCH.close()
+        except:
+            pass
+
+        try:
+            self.OLED.disable_small_scroller()
+        except:
+            pass
+        
 
         #we sluiten alles af
         

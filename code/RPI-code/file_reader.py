@@ -7,9 +7,11 @@ FILENAME_USERS = "list_of_names"
 
 FILENAME_ADC = "adc_calibration"
 
+FILENAME_COMMENTS = "comment_retirement_list"
+
 class File:
 
-    def __init__(self,file_name_data=FILENAME_DATA,file_of_names=FILENAME_USERS,file_adc_calc=FILENAME_ADC):
+    def __init__(self,file_name_data=FILENAME_DATA,file_of_names=FILENAME_USERS,file_adc_calc=FILENAME_ADC,file_comments=FILENAME_COMMENTS):
 
         self.FILENAME_DATA = file_name_data
         self.locatie = None #kan ook een auto zijn, want we nemen ze samuhhh
@@ -17,6 +19,8 @@ class File:
         self.user = None
 
         self.FILENAME_USERS = file_of_names #De namen van de gebruikers!!
+
+        self.FILENAME_COMMENTS = file_comments
 
         self.FILENAME_ADC = file_adc_calc #File dat de calibratie punten bijhoudt
 
@@ -98,6 +102,18 @@ class File:
 
         return name_list
     
+    def get_list_comment_retirement(self):
+
+        comment_list = []
+
+        with open(self.FILENAME_COMMENTS,"r") as file:
+            lines = file.readlines()
+
+        for line in lines:
+            comment_list.append(line.strip())
+
+        return comment_list
+
     def save_to_adc_file(self,line,volt_adc,volt_bat):
 
        
@@ -129,6 +145,18 @@ class File:
         second_point = (float(x2),float(y2))
 
         return first_point,second_point
+    
+    def get_data_aprils_and_user(self):
+
+        with open(self.FILENAME_DATA,"r") as file:
+            lines = file.readlines()
+        
+        locatie = lines[0].split(":")[1]
+        batterij = lines[1].split(":")[1]
+        user = lines[2].split(":")[1]
+
+        return locatie,batterij,user
+
 
         
 

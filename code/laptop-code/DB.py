@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 
 #------------------------------------------------------------------- MONGODB SETUP
-connection_string = "mongodb+srv://website:website@test.sht8tpb.mongodb.net/?appName=test"
+connection_string = "mongodb://admin:2560K3ss3l@89.167.92.181:27017/?authSource=admin"
 
 NAME_MAIN_DATABASE = "collected_data"
 
@@ -47,6 +47,21 @@ class Database:
     def retrieve_document(self,field,value):
         data_to_find = {field:value}
         
+        connected_collection = self.current_collection
+        
+        if connected_collection == None:
+            print("ERROR: you're not connected to a collection yet!")
+            return None
+        
+        found_document = connected_collection.find_one(data_to_find)
+        
+        if found_document == None:
+            print(f"Could not find data: {data_to_find} in collection {connected_collection.name}")
+            return None
+        
+        return found_document
+    def retrieve_document_multiple_fields(self,data_to_find):
+
         connected_collection = self.current_collection
         
         if connected_collection == None:

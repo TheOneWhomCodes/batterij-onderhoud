@@ -3,10 +3,13 @@ import socket
 
 import time
 import subprocess
+import os
 from OLED_display import Display
 from file_reader import File
 
 from rotary_class import Rotary
+
+from adc_class import ADC
 
 s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
 
@@ -24,8 +27,13 @@ s.close() #Nu dat we ons adres hebben sluiten we onze "connectie" met google
 
 
 OLED = Display()
+
 file_reader = File()
 
+#------------------- ADC yap
+ADC_reader = ADC()
+MIN_VOLT = 6 #de eerste punt van onze calibratie.
+MAX_VOLT = 14 #de tweede punt van onze calibratie
 
 
 BOOT_MSG = "Booting up.."
@@ -40,11 +48,20 @@ PATIENCE_MSG = "Please be patient."
 
 
 
-cmd = ["/home/raspberry/apriltag_env/bin/python",
+cmd_april = ["/home/raspberry/apriltag_env/bin/python",
        
        "/home/raspberry/april_detection.py"
 
 ]
+
+cmd_meter = ["/home/raspberry/apriltag_env/bin/python",
+             "/home/raspberry/meter.py"]
+
+cmd_main = ["/home/raspberry/apriltag_env/bin/python",
+             "/home/raspberry/main.py"]
+
+
+
 
 INTERVAL_MSGS = 1.5 # seconden per keer dat we iets toevoegen
 
@@ -88,11 +105,40 @@ OLED.write_text("Want to calibrate?")
 OLED.write_text("Yes")
 OLED.write_text("No")
 
-scroller = Rotary(OLED=OLED,base_index=1,ceiling_index=0)
+scroller = Rotary(OLED=OLED,base_index=2,ceiling_index=0)
 
 scroller.thread.join() #we laten onze main programma niet lopen TOT de scroller klaar is.
 
 answer = scroller.selected_item
+
+if answer == "Yes":
+
+    #------------- eerste calibratie
+    OLED.wipe_all_lines()
+
+    OLED.write_text("Calibrate at 6V.")
+    OLED.write_text("Done.")
+
+    scroller = Rotary(OLED=OLED,base_index=1,ceiling_index=0)
+
+    scroller.thread.join()
+
+    ADC_reader.calibrate_adc_first(MIN_VOLT)
+    #------------- tweede calibratie
+
+    OLED.wipe_all_lines()
+
+    OLED.write_text("Calibrate at 14V.")
+    OLED.write_text("Done.")
+
+    scroller = Rotary(OLED=OLED,base_index=1,ceiling_index=0)
+
+    scroller.thread.join()
+
+    ADC_reader.calibrate_adc_second(MAX_VOLT)
+
+
+    
 
 
 
@@ -117,19 +163,19 @@ for name in names:
 scroller = Rotary(OLED=OLED,base_index=3,ceiling_index=0)
 
 scroller.thread.join() #we laten onze main programma niet lopen TOT de scroller klaar is.
-
 username = scroller.selected_item
+
+scroller.close()
 
 file_reader.save_user(username)
 
 
 
-OLED.wipe_all_lines()
+#cmd_main[0] we moeten de pad geven en dan de command
+# os.execv kills de huidige proces om dan een andere uit te voeren.
+os.execv(cmd_main[0], cmd_main)
 
-
-time.sleep(0.3)
-
-proc = subprocess.run(cmd) #nu lopen we onze scanner, yay!
+#proc = subprocess.run(cmd) #nu lopen we onze scanner, yay!
 
 
 

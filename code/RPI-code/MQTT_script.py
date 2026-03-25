@@ -32,9 +32,18 @@ class MQTT:
         BROKER = self.BROKER
         DEFAULT_PORT = self.DEFAULT_PORT
         ALIVE_TIME = self.ALIVE_TIME
+        
+        #we blijven proberen om te connecteren tot dat het ons lukt
+        while True:
+            try:
+                self.client.connect(BROKER,DEFAULT_PORT,ALIVE_TIME)
+                self.client.loop_start()
+                break # we breaken wanneer we eindelijk connected zijn.
+            
+            except OSError as error:
+                print(f"ERROR: {error}")
+                
 
-        self.client.connect(BROKER,DEFAULT_PORT,ALIVE_TIME)
-        self.client.loop_start()
 
     def publish_msg(self, msg):
         TOPIC = self.TOPIC

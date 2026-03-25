@@ -21,14 +21,14 @@ ads = ADS.ADS1115(i2c)
 gain = 1  #onze gain is een programmeerbare waarde die we kunnen instellen op de adc om te zeggen tussen welke spanningen hij mag meten.
 # en 1 laats ons meten tussen 0 en ±4 V
 
-data_rate = 128 # De data rate is hoe snel die kan uitlezen
+data_rate = 8 # De data rate is hoe snel die kan uitlezen
 
 ads.gain = gain #dit laat ons lezen tussen 0 en 6V
 ads.data_rate = data_rate
 
 
 
-channel = AnalogIn(ads,0) #We maken een channel tussen poort 0 en de GND, die we kunnen meten
+#channel = AnalogIn(ads,0) #We maken een channel tussen poort 0 en de GND, die we kunnen meten
 
 
 LIMIT_PORTS = 4 #er zijn maar vier poorten die we kunnen gebruiken
@@ -56,12 +56,12 @@ class ADC:
         self.resistor_value = current_resistor #current als in stroom, a friet
 
 
-
-
         
-    def measure_volt_on_port(self,port_number=0):
+    def measure_volt_on_port(self,port_number=0,gain=1):
         
         adc = self.ADC
+        adc.gain = gain # 1 gain laat u lezen tot 4V 
+
         port_limit = self.port_limit
 
         if port_number >= port_limit or port_limit < 0:
@@ -70,38 +70,40 @@ class ADC:
 
         current_channel = AnalogIn(adc,port_number)
             
+        
+        discard_read = current_channel.voltage
+        #blijkbaar moet de ADC nog kunnen switchen dus doen we een "dummy" read
+        discard_read2 = current_channel.voltage
+        #We doen er voor de veiligheid nog één
+        
         voltage = current_channel.voltage
 
-        print(f'raw voltage:{voltage}')
+        #print(f'discarded:{discard_read}, and:{discard_read2}, true voltage:{voltage}')
         return voltage
-    def measure_volt_two_ports(self,port_num1,port_num2):
+    
+    def measure_volt_two_ports(self,port_num1,port_num2,gain=16):
         adc = self.ADC
+        adc.gain = gain # 16 gain laat u lezen tot 0.256V, met een stap van 7.8125 micro Volt
+
         port_limit = self.port_limit
 
-        if (port_num1 >= port_limit or port_num1 < 0) or (port_num2 >= port_limit or port_num2 < 2):
+        if (port_num1 >= port_limit or port_num1 < 0) or (port_num2 >= port_limit or port_num2 < 0):
             print(f"ERROR: Port or ports given are invalid. Ports:{port_num1},{port_num2}. Your limit is {port_limit}" )
             return None
         
         current_channel = AnalogIn(adc,port_num1,port_num2)
+        
+        discard_read = current_channel.voltage
+        #blijkbaar moet de ADC nog kunnen switchen dus doen we een "dummy" read
+        discard_read2 = current_channel.voltage
+        #We doen er voor de veiligheid nog één
+        
+
         diff_voltage = current_channel.voltage
 
+        #print(f"Discarded:{discard_read}, and:{discard_read2}, different:{diff_voltage}")
+
         return diff_voltage
-
-
-    def calculate_battery_current(self):
-        current_resistor_value = self.resistor_value #current als in stroom
-
-        voltage_over_resistor = self.measure_volt_two_ports(2,3)
-
-        if voltage_over_resistor is None:
-            print(f"ERROR: Voltage measuring failed. Voltage:{voltage_over_resistor}")
-
-
-        current = voltage_over_resistor / current_resistor_value
-
-        return current
-
-
 
     def calibrate_adc_first(self,minimum_volt):
 
@@ -153,11 +155,49 @@ class ADC:
 
         #print(f"x1:{x1},y1:{y1}  x2:{x2},y2:{y2}")
 
+
         measured_voltage = self.measure_volt_on_port()
+
+        print(measured_voltage)
 
         bat_voltage = y1 + ((measured_voltage-x1)/(x2-x1)) * (y2-y1)
 
+        print(bat_voltage)
+
         return bat_voltage
+    
+    def calculate_battery_current(self):
+        current_resistor_value = self.resistor_value #current als in stroom
+
+
+        voltage_over_resistor = self.measure_volt_two_ports(2,3)
+
+
+        if voltage_over_resistor is None:
+            print(f"ERROR: Voltage measuring failed. Voltage:{voltage_over_resistor}")
+
+
+        current = voltage_over_resistor / current_resistor_value
+
+        return current
+    
+    def calculate_estimation(self,battery_volt):
+
+        calculated_volt = battery_volt - 9 # vor de omzetting naar percent zo 14 - 9 snap je
+
+        percent = (calculated_volt // 5) * 100
+
+        to_string = str(percent)
+
+        percent_piece = to_string[0:5] #Twee getallen na de komma
+
+        new_percent = float(percent_piece)
+
+        return new_percent
+
+
+
+        
 
 
 

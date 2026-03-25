@@ -1,4 +1,7 @@
 import subprocess
+import os
+import sys
+
 import numpy as np
 import cv2
 from pupil_apriltags import Detector
@@ -23,12 +26,21 @@ cmd = [
 ]
 
 
-#MQTT_manager = MQTT()
-#MQTT_manager.connect_client()
+cmd_main = ["/home/raspberry/apriltag_env/bin/python",
+             "/home/raspberry/main.py"]
+
+
+TOPIC = "RPITSM2/general"
+
+MQTT_manager = MQTT(topic=TOPIC)
+
+MQTT_manager.connect_client()
+
+file_reader = File()
 
 OLED = Display()
 
-file_reader = File()
+
 
 
 process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
@@ -78,117 +90,38 @@ def get_jpeg(stream):
     return None
 
                     
-def save_jpeg(jpeg):
-    #cur_pic.jpg 
-    with open("cur_pic.jpg","wb") as file:
-        file.write(jpeg)
 
 
+#----------------------------
 
 
-def show_you_are_running():
+scanned_april = None
 
-    OLED.write_text("RUN: april detection")
-    OLED.write_text("Ready to scan!")
+def show_you_are_running(patience=False):
     
-
-
-
-
-
-def display_tags_found(found_IDs): 
-
-    
-
-    FLAVOUR_TEXT = "Scanned apriltags:"
-
-    OLED.wipe_all_lines()
-
-    OLED.write_text(FLAVOUR_TEXT)
-    OLED.write_text(" ")
-    
-
-
-    IDs_in_string = ""
-
-
-    for ID in found_IDs:
-        IDs_in_string += str(ID)
-
-        if IDs_in_string == "": continue
-        IDs_in_string += ","
-
-
-    
-
-    found_id_text = f"IDs:{IDs_in_string}"
-
-    
-    OLED.write_text(found_id_text)
-
-
-
-
-
-def save_found_tags(tags):
-
-    main_string = ""
-
-    for tag in tags:
-        main_string += str(tag)
-        main_string += ","
-
-    with open("multiple_tags.txt","w") as apriltag_file:
-        apriltag_file.write(main_string)
-
-
-
-
-
-
-order_operation = 0
-
-def show_track(patience=False):
-    global order_operation
     OLED.wipe_all_lines()
 
     if patience:
         OLED.write_text("Please be patient!")
-    elif order_operation == 0:
-        OLED.write_text("Please scan location:")
-    elif order_operation == 1:
-        OLED.write_text("Please scan battery:")
     else:
-        OLED.write_text("scan completed!")
+        OLED.write_text("Please scan the")
+        OLED.write_text("the battery to retire")
+
 
     
 
+def check_validity(tag_id):
+    global scanned_april
 
-def keep_track(tag_id):
-
-    global order_operation
-
-    if order_operation == 0: #onze oder of operations begint met onze locatie te scanne (0)
-        
-        if not (tag_id < 200 and tag_id >= 0):
-            print(f"ERROR: Tag {tag_id} is not a valid location.")
-            return None
-        
-        file_reader.save_locatie(tag_id)
-        order_operation = 1
-        
-
-    elif order_operation == 1:
-        
-        if not (tag_id <= 586 and tag_id >= 200):
-            print(f"ERROR: Tag {tag_id} is not a valid battery.")
-            return None
-        
-        file_reader.save_batterij(tag_id)
-        order_operation = None #Ik zet da op None, omdat er geen operaties meer moeten gedaan worden
-        
+    if not (tag_id <= 586 and tag_id >= 200):
+        print(f"ERROR: Tag {tag_id} is not a valid battery.")
+        return None
     
-        
+    scanned_april = tag_id
+
+    return True
+    
+
 
         
 def show_tag_options(tags):
@@ -204,6 +137,7 @@ def show_tag_options(tags):
     
     scroller = Rotary(OLED=OLED,base_index=1,ceiling_index=0)
     scroller.thread.join()
+    scroller.close()
 
    
     selected_tag = scroller.selected_item
@@ -228,24 +162,21 @@ def skip_to_latest_frame(stream):
 
 OLED_WAIT_TIME = 1 # om ons ID te zien op de OLED, anders gingen we het plaatsen en dan direct weg doen
 
+#en nu heeft het nut om onze gpiozero library niet te overbelasten.
 
 
 
-
-show_track() #laat zien wat we nu moeten scannen eigenlihk
-
+show_you_are_running() #laat zien wat we nu moeten scannen eigenlihk
 
 
-currently_scanning = False
+
 
 try:
 
     while True:
 
 
-        if currently_scanning:
-            continue
-        
+
         jpeg = get_jpeg(process.stdout)
 
         if jpeg is None: continue
@@ -266,19 +197,23 @@ try:
 
         for result in found_results:
             found_id = result.tag_id
+            
             found_ids.append(found_id)
 
         if found_ids == []: continue
 
-        
-
+    
         amount_found_ids = len(found_ids)
         print(f"The IDs we've found: {found_ids}")
 
         
         
         if amount_found_ids == 1:
-            keep_track(found_ids[0])
+            tag_id = found_ids[0]
+            valid = check_validity(tag_id)
+
+            if valid:
+                break
         else:
             #hier doen dat ons menu komt voor meerdere
             currently_scanning = True
@@ -286,19 +221,15 @@ try:
             tag = show_tag_options(found_ids)
             
 
-            show_track(patience=True)
+            show_you_are_running(patience=True)
             
             if tag is not None:
                 skip_to_latest_frame(process.stdout)
-                keep_track(tag)
-                
-            currently_scanning = False
-            
-            
-        show_track()
+                valid = check_validity(tag)
 
-        if order_operation is None:
-            break
+                if valid:
+                    
+                    break
 
 
 except KeyboardInterrupt:
@@ -308,21 +239,38 @@ finally:
     
     process.terminate()
     process.wait()
+
     
-    
-    #MQTT_manager.disconnect_client()
+OLED.wipe_all_lines()
+
+comments = file_reader.get_list_comment_retirement()
+
+for comment in comments:
+    OLED.write_text(comment)
+
+print("rotay boy lmao")
+
+try:
+
+    scroller = Rotary(OLED=OLED,ceiling_index=-1,base_index=0)
+
+    scroller.thread.join() #we laten onze main programma niet lopen TOT de scroller klaar is.
+
+    comment_chosen = scroller.selected_item
+except Exception as e:
+    print(e)
 
 
 
+payload = {"dataType":"retirement","tagId":scanned_april,"comment":comment_chosen}
+
+MQTT_manager.publish_msg(payload)
+
+MQTT_manager.disconnect_client()
+
+os.execv(cmd_main[0],cmd_main)
 
 
-
-time.sleep(OLED_WAIT_TIME) 
-
-file_reader.save_to_file()
-process.terminate()
-process.wait()
-#MQTT_manager.disconnect_client()
 
 
 
