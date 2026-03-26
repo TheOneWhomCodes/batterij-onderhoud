@@ -55,6 +55,25 @@ Een andere leerkracht of beheerder maakt je leerkracht en geeft je schrijfrechte
 
 Nu kan je inloggen als leerkracht!
 
+Je kan nu nieuwe data toevoegen bij:
+- de meetdata
+- de batterijen
+- de locaties
+
+Om data toe te voegen **klik** je op de **+**
+
+Scroll nu naar beneden en daar staat je data!
+
+Leerkrachten hebben ook een **leerlingen tab**
+
+in leerlingen staan alle gebruikers, en deze kan je schrijfrechten geven en leerkrachten status geven.
+
+Je kan ook nieuwe leerlingen toevoegen!
+
+
+
+
+
 
 
 
