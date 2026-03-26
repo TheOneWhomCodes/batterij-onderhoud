@@ -6,9 +6,9 @@
 - Nadat je iets hebt toegevoegd scrol je naar beneden en daar staat de data.
 - Leerkrachten hebben ook een tab "Leerlingen". In leerlingen staan alle gebruikers, deze kan je schrijf rechten en leerkracht status geven. Je kan ook nieuwe leerlingen toevoegen.
 
-- # Handleiding website gebruik!
+# Handleiding website gebruik!
 
-- ## Leerling
+## Leerling
 
 Je registreet je bij **"leerling"**
 
@@ -18,7 +18,13 @@ Je kan van boven verschillende opties klikken om data te zien, zoals:
   - de batterijen
   - de meetdata (wedstrijden en statisch)
   - de locaties/karts
-  - en de tags
+  - de tags
+
+### Hoe kan ik aanpassingen maken?
+
+Wanneer een andere leerkracht of beheerder je schrijfrechten geeft
+
+
 
 
 
