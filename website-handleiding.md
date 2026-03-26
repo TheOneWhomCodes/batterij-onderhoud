@@ -10,7 +10,17 @@
 
 - ## Leerling
 
-  Je registreet je bij **"leerling"**
+Je registreet je bij **"leerling"**
+
+Wanneer je als leerling registreert kan je de data zien en lezen, maar **niet aanpassen!**
+
+Je kan van boven verschillende opties klikken om data te zien, zoals:
+  - de batterijen
+  - de meetdata (wedstrijden en statisch)
+  - de locaties/karts
+  - en de tags
+
+
 
   
   
