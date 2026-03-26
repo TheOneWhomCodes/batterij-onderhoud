@@ -28,7 +28,10 @@ Hiermee kan je nu data toevoegen aan:
 - de batterijen
 - de meetdata
 - de locaties
-Hiervoor **klik** je op de **+**
+
+Om data toe te voegen **klik** je op de **+**
+
+Scroll nu naar beneden en daar staat je data!
 
 
 
