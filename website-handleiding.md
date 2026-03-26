@@ -35,6 +35,8 @@ Scroll nu naar beneden en daar staat je data!
 
 ## Leerkracht
 
+### Stel, je hebt geen account als leerkracht.
+
 Je registreert je als **"leerling"**
 
 Je ziet boven verschillende opties die je kan klikken om verschillende data te zien, zoals:
@@ -48,6 +50,11 @@ Je ziet boven verschillende opties die je kan klikken om verschillende data te z
 Een tag is een **soort** van **qr code**. Ze kunnen bij batterijen, locaties of karts behoren.
 
 ### Hoe kan ik aanpassingen maken als leerkracht?
+
+Een andere leerkracht of beheerder maakt je leerkracht en geeft je schrijfrechten.
+
+Nu kan je inloggen als leerkracht!
+
 
 
 
