@@ -10,7 +10,7 @@
 
 ## Leerling
 
-Je registreet je bij **"leerling"**
+Je registreert je bij **"leerling"**
 
 Wanneer je als leerling registreert kan je de data zien en lezen, maar **niet aanpassen!**
 
@@ -32,6 +32,26 @@ Hiermee kan je nu data toevoegen aan:
 Om data toe te voegen **klik** je op de **+**
 
 Scroll nu naar beneden en daar staat je data!
+
+## Leerkracht
+
+Je registreert je als **"leerling"**
+
+Je ziet boven verschillende opties die je kan klikken om verschillende data te zien, zoals:
+- de batterijen
+- de meetdata
+- de locaties/karts
+- de tags
+
+### Wat is een tag?
+
+Een tag is een **soort** van **qr code**. Ze kunnen bij batterijen, locaties of karts behoren.
+
+### Hoe kan ik aanpassingen maken als leerkracht?
+
+
+
+
 
 
 
