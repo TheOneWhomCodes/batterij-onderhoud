@@ -22,7 +22,13 @@ Je kan van boven verschillende opties klikken om data te zien, zoals:
 
 ### Hoe kan ik aanpassingen maken?
 
-Wanneer een andere leerkracht of beheerder je schrijfrechten geeft
+Wanneer een andere leerkracht of beheerder je schrijfrechten geeft.
+
+Hiermee kan je nu data toevoegen aan:
+- de batterijen
+- de meetdata
+- de locaties
+Hiervoor **klik** je op de **+**
 
 
 
