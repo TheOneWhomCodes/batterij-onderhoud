@@ -18,6 +18,12 @@ Daarna install pip van python, pip is de standaard package manager van python.
 sudo apt install python3-pip -y
 ```
 
+Install ook nog mqtt
+
+```
+sudo apt install python3-paho-mqtt
+
+```
 
  ### Libraries van de camera:
    - pupil-apriltags:
